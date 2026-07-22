@@ -1,0 +1,523 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2>
+
+            <i class="bi bi-person-circle"></i>
+
+            Student Dashboard
+
+        </h2>
+
+        <p class="text-secondary">
+
+            Welcome, {{ request.user.first_name|default:request.user.username }}
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- Dashboard Cards -->
+
+<div class="dashboard-cards">
+
+    <div class="card-box">
+
+        <h6>
+
+            <i class="bi bi-person-vcard"></i>
+
+            Student ID
+
+        </h6>
+
+        <h2>
+
+            {{ student_profile.student_id }}
+
+        </h2>
+
+    </div>
+
+    <div class="card-box">
+
+        <h6>
+
+            <i class="bi bi-book"></i>
+
+            My Courses
+
+        </h6>
+
+        <h2>
+
+            {{ my_courses|length }}
+
+        </h2>
+
+    </div>
+
+    <div class="card-box">
+
+        <h6>
+
+            <i class="bi bi-calendar-check"></i>
+
+            Attendance
+
+        </h6>
+
+        <h2>
+
+            {{ my_attendance|length }}
+
+        </h2>
+
+    </div>
+
+    <div class="card-box">
+
+        <h6>
+
+            <i class="bi bi-cash-stack"></i>
+
+            Fee Records
+
+        </h6>
+
+        <h2>
+
+            {{ my_fees|length }}
+
+        </h2>
+
+    </div>
+
+</div>
+
+<!-- Quick Access -->
+
+<div class="table-card mt-4 mb-4">
+
+    <h4 class="mb-3">
+
+        <i class="bi bi-lightning-charge"></i>
+
+        Quick Access
+
+    </h4>
+
+    <a href="{% url 'course_list' %}" class="btn btn-main me-2">
+
+        <i class="bi bi-book"></i>
+
+        My Courses
+
+    </a>
+
+    <a href="{% url 'attendance_list' %}" class="btn btn-main me-2">
+
+        <i class="bi bi-calendar-check"></i>
+
+        Attendance
+
+    </a>
+
+    <a href="{% url 'fee_list' %}" class="btn btn-main">
+
+        <i class="bi bi-cash-stack"></i>
+
+        Fees
+
+    </a>
+
+</div>
+
+<div class="row">
+
+    <!-- Attendance -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="table-card">
+
+            <h4 class="mb-3">
+
+                My Attendance
+
+            </h4>
+
+            <div class="alert alert-primary">
+
+                <strong>Total Records :</strong>
+
+                {{ my_attendance|length }}
+
+            </div>
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student ID</th>
+
+                        <th>Date</th>
+
+                        <th>Course</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for attendance in my_attendance %}
+
+                    <tr>
+
+                        <td>{{ student_profile.student_id }}</td>
+
+                        <td>{{ attendance.date }}</td>
+
+                        <td>{{ attendance.course.course_name }}</td>
+
+                        <td>
+
+                            {% if attendance.status == "Present" %}
+
+                                <span class="badge bg-success">
+
+                                    Present
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-danger">
+
+                                    Absent
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="4" class="text-center">
+
+                            No Attendance Records
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+        <!-- Fee Status -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="table-card">
+
+            <h4 class="mb-3">
+
+                Fee Status
+
+            </h4>
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Course</th>
+
+                        <th>Amount</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for fee in my_fees %}
+
+                    <tr>
+
+                        <td>{{ fee.course.course_name }}</td>
+
+                        <td>₹ {{ fee.amount }}</td>
+
+                        <td>
+
+                            {% if fee.status == "Paid" %}
+
+                                <span class="badge bg-success">
+
+                                    Paid
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-warning text-dark">
+
+                                    Pending
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="3" class="text-center">
+
+                            No Fee Records
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- My Courses -->
+
+<div class="table-card mb-4">
+
+    <h4 class="mb-3">
+
+        <i class="bi bi-book"></i>
+
+        My Courses
+
+    </h4>
+
+    <table class="table table-hover">
+
+        <thead>
+
+            <tr>
+
+                <th>Course</th>
+
+                <th>Teacher</th>
+
+                <th>Duration</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for course in my_courses %}
+
+            <tr>
+
+                <td>{{ course.course_name }}</td>
+
+                <td>{{ course.teacher_name }}</td>
+
+                <td>{{ course.duration }}</td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="3" class="text-center">
+
+                    No Courses Enrolled
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<!-- Upcoming Classes & Assignments -->
+
+<div class="row">
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="table-card">
+
+            <h4 class="mb-3">
+
+                <i class="bi bi-calendar-event"></i>
+
+                Upcoming Classes
+
+            </h4>
+
+            <h4 class="mb-3">
+    <i class="bi bi-calendar-event"></i>
+    Upcoming Classes
+</h4>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Day</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    {% for t in my_timetable %}
+
+    <tr>
+        <td>{{ t.course.course_name }}</td>
+        <td>{{ t.day }}</td>
+        <td>{{ t.start_time }} - {{ t.end_time }}</td>
+    </tr>
+
+    {% empty %}
+
+    <tr>
+        <td colspan="3" class="text-center">
+            No Classes
+        </td>
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+</table>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="table-card">
+
+            <h4 class="mb-3">
+
+                <i class="bi bi-journal-text"></i>
+
+                Assignments
+
+            </h4>
+
+            <h4 class="mb-3">
+    <i class="bi bi-journal-text"></i>
+    Assignments
+</h4>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Course</th>
+            <th>Due</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    {% for assignment in my_assignments %}
+
+    <tr>
+        <td>{{ assignment.title }}</td>
+        <td>{{ assignment.course.course_name }}</td>
+        <td>{{ assignment.due_date }}</td>
+    </tr>
+
+    {% empty %}
+
+    <tr>
+        <td colspan="3" class="text-center">
+            No Assignments
+        </td>
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+</table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Upcoming Tests -->
+
+<div class="table-card">
+
+    <h4 class="mb-3">
+
+        <i class="bi bi-pencil-square"></i>
+
+        Upcoming Tests
+
+    </h4>
+
+    <p class="text-muted">
+
+        Test schedule will appear here.
+
+    </p>
+
+</div>
+
+{% endblock %}

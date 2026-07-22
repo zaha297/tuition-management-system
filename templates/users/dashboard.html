@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+Dashboard
+
+</h2>
+
+<div class="dashboard-cards">
+
+<div class="card-box">
+
+<h6>Students</h6>
+
+<h2>{{student_count}}</h2>
+
+</div>
+
+<div class="card-box">
+
+<h6>Teachers</h6>
+
+<h2>{{teacher_count}}</h2>
+
+</div>
+
+<div class="card-box">
+
+<h6>Courses</h6>
+
+<h2>{{course_count}}</h2>
+
+</div>
+
+<div class="card-box">
+
+<h6>Attendance</h6>
+
+<h2>{{attendance_count}}</h2>
+
+</div>
+
+<div class="card-box">
+
+<h6>Fee Records</h6>
+
+<h2>{{fee_count}}</h2>
+
+</div>
+
+<div class="card-box">
+
+<h6>Parents</h6>
+
+<h2>{{parent_count}}</h2>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="table-card">
+
+<div class="d-flex justify-content-between">
+
+<h4>
+
+Quick Actions
+
+</h4>
+
+</div>
+
+<hr>
+
+<div class="row">
+
+<div class="col-md-3 mb-3">
+
+<a href="/courses/add/" class="btn btn-main w-100">
+
+Add Course
+
+</a>
+
+</div>
+
+<div class="col-md-3 mb-3">
+
+<a href="/attendance/add/" class="btn btn-main w-100">
+
+Attendance
+
+</a>
+
+</div>
+
+<div class="col-md-3 mb-3">
+
+<a href="/fees/add/" class="btn btn-main w-100">
+
+Add Fee
+
+</a>
+
+</div>
+
+<div class="col-md-3 mb-3">
+
+<a href="/courses/" class="btn btn-main w-100">
+
+View Courses
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

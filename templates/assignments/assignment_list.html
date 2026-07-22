@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2>Assignments</h2>
+        <p class="text-secondary">
+            Manage assignments.
+        </p>
+    </div>
+
+    {% if request.user.is_superuser or request.user.profile.role == "Admin" or request.user.profile.role == "Teacher" %}
+    <a href="{% url 'add_assignment' %}" class="btn btn-main">
+        Add Assignment
+    </a>
+    {% endif %}
+
+</div>
+
+<form method="GET" class="mb-3">
+
+    <input
+        type="text"
+        name="q"
+        value="{{ request.GET.q }}"
+        class="form-control"
+        placeholder="Search Assignment..."
+    >
+
+</form>
+
+<div class="table-card">
+
+<table class="table table-hover align-middle">
+
+<thead>
+
+<tr>
+
+<th>Title</th>
+<th>Course</th>
+<th>Due Date</th>
+
+{% if request.user.is_superuser or request.user.profile.role == "Admin" or request.user.profile.role == "Teacher" %}
+<th width="180">Actions</th>
+{% endif %}
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for assignment in assignments %}
+
+<tr>
+
+<td>{{ assignment.title }}</td>
+
+<td>{{ assignment.course.course_name }}</td>
+
+<td>{{ assignment.due_date }}</td>
+
+{% if request.user.is_superuser or request.user.profile.role == "Admin" or request.user.profile.role == "Teacher" %}
+
+<td>
+
+<a href="{% url 'edit_assignment' assignment.id %}" class="btn btn-warning btn-sm">
+Edit
+</a>
+
+<a href="{% url 'delete_assignment' assignment.id %}"
+class="btn btn-danger btn-sm"
+onclick="return confirm('Delete this assignment?');">
+Delete
+</a>
+
+</td>
+
+{% endif %}
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="4" class="text-center">
+
+No Assignments Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

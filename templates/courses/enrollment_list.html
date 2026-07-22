@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2>
+
+            <i class="bi bi-person-plus-fill"></i>
+
+            Student Enrollments
+
+        </h2>
+
+        <p class="text-secondary">
+
+            Manage student course enrollments.
+
+        </p>
+
+    </div>
+
+    <a href="{% url 'add_enrollment' %}" class="btn btn-main">
+
+        <i class="bi bi-plus-circle"></i>
+
+        Enroll Student
+
+    </a>
+
+</div>
+
+
+<div class="table-card">
+
+<table class="table table-hover align-middle">
+
+<thead>
+
+<tr>
+
+<th>Student</th>
+
+<th>Course</th>
+
+<th>Enrollment Date</th>
+
+<th width="180">Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for e in enrollments %}
+
+<tr>
+
+<td>
+
+{{ e.student.username }}
+
+</td>
+
+<td>
+
+{{ e.course.course_name }}
+
+</td>
+
+<td>
+
+{{ e.enrollment_date }}
+
+</td>
+
+<td>
+
+<a href="{% url 'edit_enrollment' e.id %}"
+class="btn btn-warning btn-sm">
+
+Edit
+
+</a>
+
+<a href="{% url 'delete_enrollment' e.id %}"
+class="btn btn-danger btn-sm"
+onclick="return confirm('Delete this enrollment?');">
+
+Delete
+
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="4" class="text-center">
+
+No Enrollments Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

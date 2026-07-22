@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2>Fees</h2>
+
+        <p class="text-secondary">
+            Manage student fee payments.
+        </p>
+
+    </div>
+
+    <a href="{% url 'add_fee' %}" class="btn btn-main">
+
+        <i class="bi bi-plus-circle"></i>
+
+        Add Fee
+
+    </a>
+
+</div>
+
+<form method="GET" class="mb-3">
+
+    <input
+        type="text"
+        name="q"
+        value="{{ request.GET.q }}"
+        class="form-control"
+        placeholder="Search student...">
+
+</form>
+
+<div class="table-card">
+
+    <table class="table table-hover align-middle">
+
+        <thead>
+
+            <tr>
+
+                <th>Student</th>
+
+                <th>Course</th>
+
+                <th>Amount</th>
+
+                <th>Payment Date</th>
+
+                <th>Status</th>
+
+                <th width="180">Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for fee in fees %}
+
+            <tr>
+
+                <td>{{ fee.student.username }}</td>
+
+                <td>{{ fee.course.course_name }}</td>
+
+                <td>₹ {{ fee.amount }}</td>
+
+                <td>{{ fee.payment_date }}</td>
+
+                <td>
+
+                    {% if fee.status == "Paid" %}
+
+                        <span class="badge bg-success">
+
+                            Paid
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-warning text-dark">
+
+                            Pending
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <a href="{% url 'edit_fee' fee.id %}"
+                       class="btn btn-outline-primary btn-sm">
+
+                        <i class="bi bi-pencil-square"></i>
+
+                    </a>
+
+                    <a href="{% url 'delete_fee' fee.id %}"
+                       class="btn btn-outline-danger btn-sm"
+                       onclick="return confirm('Delete this fee record?');">
+
+                        <i class="bi bi-trash"></i>
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="6" class="text-center">
+
+                    No Fee Records Found
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'auth_base.html' %}
+
+{% block title %}
+Create Account
+{% endblock %}
+
+{% block content %}
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-main">
+        Register
+    </button>
+
+</form>
+
+<div class="text-center mt-4">
+
+    <small class="text-muted">
+        Already have an account?
+    </small>
+
+    <br><br>
+
+    <a href="/login/" class="btn btn-outline-secondary w-100">
+        Login
+    </a>
+
+</div>
+
+{% endblock %}

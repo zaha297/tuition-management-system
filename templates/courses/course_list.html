@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2>
+
+            <i class="bi bi-book"></i>
+
+            Courses
+
+        </h2>
+
+        <p class="text-secondary">
+
+            Manage all available courses.
+
+        </p>
+
+    </div>
+
+    {% if request.user.is_superuser %}
+
+    <div>
+
+        <a href="{% url 'add_course' %}" class="btn btn-main me-2">
+
+            <i class="bi bi-plus-circle"></i>
+
+            Add Course
+
+        </a>
+
+        <a href="{% url 'enrollment_list' %}" class="btn btn-outline-primary">
+
+            <i class="bi bi-person-plus"></i>
+
+            Enrollments
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+<form method="GET" class="mb-3">
+
+    <input
+        type="text"
+        name="q"
+        value="{{ request.GET.q }}"
+        class="form-control"
+        placeholder="Search Course...">
+
+</form>
+
+
+<div class="table-card">
+
+<table class="table table-hover align-middle">
+
+<thead>
+
+<tr>
+
+<th>Course</th>
+
+<th>Teacher</th>
+
+<th>Duration</th>
+
+<th>Fee</th>
+
+{% if request.user.is_superuser %}
+<th width="180">Actions</th>
+{% endif %}
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for course in courses %}
+
+<tr>
+
+<td>
+
+<strong>
+
+{{ course.course_name }}
+
+</strong>
+
+</td>
+
+<td>
+
+{{ course.teacher_name }}
+
+</td>
+
+<td>
+
+{{ course.duration }}
+
+</td>
+
+<td>
+
+₹ {{ course.fee }}
+
+</td>
+
+{% if request.user.is_superuser %}
+
+<td>
+
+<a href="{% url 'edit_course' course.id %}"
+class="btn btn-warning btn-sm">
+
+Edit
+
+</a>
+
+<a href="{% url 'delete_course' course.id %}"
+class="btn btn-danger btn-sm"
+onclick="return confirm('Delete this course?');">
+
+Delete
+
+</a>
+
+</td>
+
+{% endif %}
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="5" class="text-center">
+
+No Courses Available
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

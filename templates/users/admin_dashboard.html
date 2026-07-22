@@ -1,0 +1,410 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2>
+            <i class="bi bi-speedometer2"></i>
+            Admin Dashboard
+        </h2>
+
+        <p class="text-secondary">
+            Welcome to the Tuition Management System.
+        </p>
+
+    </div>
+
+</div>
+
+<!-- Dashboard Cards -->
+
+<div class="dashboard-cards">
+
+    <div class="card-box">
+
+        <h6>
+            <i class="bi bi-people-fill"></i>
+            Students
+        </h6>
+
+        <h2>{{ student_count }}</h2>
+
+    </div>
+
+    <div class="card-box">
+
+        <h6>
+            <i class="bi bi-person-workspace"></i>
+            Teachers
+        </h6>
+
+        <h2>{{ teacher_count }}</h2>
+
+    </div>
+
+    <div class="card-box">
+
+        <h6>
+            <i class="bi bi-book"></i>
+            Courses
+        </h6>
+
+        <h2>{{ course_count }}</h2>
+
+    </div>
+
+    <div class="card-box">
+
+        <h6>
+            <i class="bi bi-calendar-check"></i>
+            Attendance
+        </h6>
+
+        <h2>{{ attendance_count }}</h2>
+
+    </div>
+
+    <div class="card-box">
+
+        <h6>
+            <i class="bi bi-cash-stack"></i>
+            Fee Records
+        </h6>
+
+        <h2>{{ fee_count }}</h2>
+
+    </div>
+
+</div>
+
+<!-- Quick Actions -->
+
+<div class="table-card mb-4">
+
+    <h4 class="mb-3">
+
+        Quick Actions
+
+    </h4>
+
+    <a href="{% url 'add_course' %}" class="btn btn-main me-2">
+
+        <i class="bi bi-plus-circle"></i>
+
+        Add Course
+
+    </a>
+
+    <a href="{% url 'add_attendance' %}" class="btn btn-main me-2">
+
+        <i class="bi bi-calendar-plus"></i>
+
+        Mark Attendance
+
+    </a>
+
+    <a href="{% url 'add_fee' %}" class="btn btn-main">
+
+        <i class="bi bi-cash"></i>
+
+        Add Fee
+
+    </a>
+
+</div>
+
+<div class="row">
+
+    <!-- Recent Courses -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="table-card">
+
+            <h4 class="mb-3">
+
+                Recent Courses
+
+            </h4>
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Course</th>
+
+                        <th>Teacher</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for course in recent_courses %}
+
+                    <tr>
+
+                        <td>{{ course.course_name }}</td>
+
+                        <td>{{ course.teacher.username }}</td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="2">
+
+                            No Courses
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- Recent Attendance -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="table-card">
+
+            <h4 class="mb-3">
+
+                Recent Attendance
+
+            </h4>
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student</th>
+
+                        <th>Course</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for record in recent_attendance %}
+
+                    <tr>
+
+                        <td>{{ record.student.username }}</td>
+
+                        <td>{{ record.course.course_name }}</td>
+
+                        <td>
+
+                            {% if record.status == "Present" %}
+
+                                <span class="badge bg-success">
+
+                                    Present
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-danger">
+
+                                    Absent
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="3">
+
+                            No Attendance Records
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+        <!-- Recent Fee Payments -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="table-card">
+
+            <h4 class="mb-3">
+
+                Recent Fee Payments
+
+            </h4>
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student</th>
+
+                        <th>Amount</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for fee in recent_fees %}
+
+                    <tr>
+
+                        <td>{{ fee.student.username }}</td>
+
+                        <td>₹ {{ fee.amount }}</td>
+
+                        <td>
+
+                            {% if fee.status == "Paid" %}
+
+                                <span class="badge bg-success">
+
+                                    Paid
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-warning text-dark">
+
+                                    Pending
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="3">
+
+                            No Fee Records
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- Recent Students -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="table-card">
+
+            <h4 class="mb-3">
+
+                Recent Students
+
+            </h4>
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Username</th>
+
+                        <th>Email</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for student in recent_students %}
+
+                    <tr>
+
+                        <td>{{ student.user.username }}</td>
+
+                        <td>{{ student.user.email }}</td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="2">
+
+                            No Students
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
