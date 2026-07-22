@@ -1,0 +1,1 @@
+web: gunicorn tuition_management.wsgi:application
