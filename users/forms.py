@@ -14,7 +14,6 @@ class UserRegisterForm(UserCreationForm):
     ROLE_CHOICES = [
         ("Student", "Student"),
         ("Teacher", "Teacher"),
-        ("Parent", "Parent"),
     ]
 
     role = forms.ChoiceField(choices=ROLE_CHOICES)

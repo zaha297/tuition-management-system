@@ -3,23 +3,56 @@ from django.contrib.auth.decorators import login_required
 from users.decorators import admin_or_teacher
 from .models import Attendance
 from .forms import AttendanceForm
+from courses.models import Course
 
+@login_required
+def class_attendance(request, course_id):
 
+    course = get_object_or_404(Course, id=course_id)
+
+    attendances = Attendance.objects.filter(
+        course=course
+    ).select_related(
+        "student",
+        "course"
+    )
+
+    return render(
+        request,
+        "attendance/attendance_list.html",
+        {
+            "attendances": attendances,
+            "course": course,
+        }
+    )
 @login_required
 def attendance_list(request):
 
     query = request.GET.get("q")
 
-    attendances = Attendance.objects.select_related(
-        "student",
-        "course"
-    )
+    # Student → only own attendance
+    if hasattr(request.user, "profile") and request.user.profile.role == "Student":
 
-    if query:
-
-        attendances = attendances.filter(
-            student__username__icontains=query
+        attendances = Attendance.objects.filter(
+            student=request.user
+        ).select_related(
+            "student",
+            "course"
         )
+
+    # Admin / Teacher
+    else:
+
+        attendances = Attendance.objects.select_related(
+            "student",
+            "course"
+        )
+
+        if query:
+
+            attendances = attendances.filter(
+                student__username__icontains=query
+            )
 
     return render(
         request,

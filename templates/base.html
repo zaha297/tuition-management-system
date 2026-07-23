@@ -302,16 +302,25 @@ Dashboard
 Timetable
 </a>
 
+{% if request.user.is_superuser or request.user.profile.role == "Admin" or request.user.profile.role == "Teacher" %}
+{% if request.user.profile.role != "Student" %}
 <a href="{% url 'student_list' %}">
 <i class="bi bi-people-fill"></i>
 Students
 </a>
+{% endif %}
+{% endif %}
 
-<a href="{% url 'teacher_list' %}" class="nav-link">
+{% if request.user.is_superuser or request.user.profile.role == "Admin" %}
+{% if request.user.profile.role != "Student" %}
+<a href="{% url 'teacher_list' %}">
 <i class="bi bi-person-workspace"></i>
 Teachers
 </a>
-<a href="{% url 'course_list' %}">
+{% endif %}
+{% endif %}
+
+<a href="{% url 'my_classes' %}">
 <i class="bi bi-book"></i>
 Courses
 </a>

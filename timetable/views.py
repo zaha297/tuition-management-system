@@ -4,12 +4,54 @@ from django.contrib.auth.decorators import login_required
 from users.decorators import admin_or_teacher
 from .models import Timetable
 from .forms import TimetableForm
+from courses.models import Course
+from .models import Timetable
+
+
+@login_required
+def class_timetable(request, course_id):
+
+    course = get_object_or_404(Course, id=course_id)
+
+    timetable = Timetable.objects.filter(course=course)
+
+    return render(
+        request,
+        "timetable/class_timetable.html",
+        {
+            "course": course,
+            "timetable": timetable,
+        }
+    )
 
 
 @login_required
 def timetable_list(request):
 
-    timetables = Timetable.objects.select_related("course")
+    # Admin can see everything
+    if request.user.is_superuser:
+        timetables = Timetable.objects.select_related("course")
+
+    else:
+
+        profile = request.user.profile
+
+        if profile.role == "Student":
+
+            enrollments = request.user.enrollment_set.all()
+
+            course_ids = enrollments.values_list(
+                "course_id",
+                flat=True
+            )
+
+            timetables = Timetable.objects.filter(
+                course_id__in=course_ids
+            ).select_related("course")
+
+        else:
+
+            timetables = Timetable.objects.select_related("course")
 
     return render(
         request,
@@ -18,7 +60,6 @@ def timetable_list(request):
             "timetables": timetables
         }
     )
-
 
 @login_required
 @admin_or_teacher

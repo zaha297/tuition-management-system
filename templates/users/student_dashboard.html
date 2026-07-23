@@ -175,6 +175,7 @@
                         <th>Course</th>
 
                         <th>Status</th>
+                        
 
                     </tr>
 
@@ -254,13 +255,10 @@
                 <thead>
 
                     <tr>
-
                         <th>Course</th>
-
                         <th>Amount</th>
-
                         <th>Status</th>
-
+                        <th>Payment Date</th>
                     </tr>
 
                 </thead>
@@ -294,6 +292,11 @@
                                 </span>
 
                             {% endif %}
+                            </td>
+
+                            <td>
+                                {{ fee.payment_date }}
+                            </td>
 
                         </td>
 
@@ -347,6 +350,7 @@
                 <th>Teacher</th>
 
                 <th>Duration</th>
+                <th>Fee</th>
 
             </tr>
 
@@ -360,9 +364,10 @@
 
                 <td>{{ course.course_name }}</td>
 
-                <td>{{ course.teacher_name }}</td>
+                <td>{{ course.teacher.name }}</td>
 
                 <td>{{ course.duration }}</td>
+                <td>₹ {{ course.fee }}</td>
 
             </tr>
 

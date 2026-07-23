@@ -14,13 +14,17 @@
 
     </div>
 
+    {% if request.user.is_superuser or request.user.profile.role == "Admin" or request.user.profile.role == "Teacher" %}
+
     <a href="{% url 'add_fee' %}" class="btn btn-main">
 
-        <i class="bi bi-plus-circle"></i>
+    <i class="bi bi-plus-circle"></i>
 
-        Add Fee
+    Add Fee
 
-    </a>
+</a>
+
+{% endif %}
 
 </div>
 

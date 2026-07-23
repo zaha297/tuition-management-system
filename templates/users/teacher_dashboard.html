@@ -1,30 +1,124 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
 
-<h2>
+<h2 class="mb-4">
 
-Teacher Dashboard
+    Teacher Dashboard
 
 </h2>
 
-<div class="dashboard-cards">
+<div class="table-card">
 
-<div class="card-box">
+    <h4 class="mb-4">
 
-<h6>My Courses</h6>
+        My Classes
 
-<h2>{{course_count}}</h2>
+    </h4>
 
-</div>
+    <table class="table table-hover">
 
-<div class="card-box">
+        <thead>
 
-<h6>Attendance</h6>
+            <tr>
 
-<h2>{{attendance_count}}</h2>
+                <th>Class</th>
+                <th>Students</th>
+                <th>Attendance</th>
+                <th>Assignments</th>
+                <th>Timetable</th>
+                <th>Fees</th>
 
-</div>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for course in courses %}
+
+        <tr>
+
+            <td>
+
+                <strong>{{ course.course_name }}</strong>
+
+            </td>
+
+            <td>
+
+                <a href="{% url 'class_detail' course.id %}"
+                   class="btn btn-outline-primary btn-sm">
+
+                    Open
+
+                </a>
+
+            </td>
+
+            <td>
+
+                <a href="{% url 'class_attendance' course.id %}"
+                   class="btn btn-outline-success btn-sm">
+
+                    Open
+
+                </a>
+
+            </td>
+
+            <td>
+
+                <a href="{% url 'class_assignments' course.id %}"
+                   class="btn btn-outline-warning btn-sm">
+
+                    Open
+
+                </a>
+
+            </td>
+
+            <td>
+
+                <a href="{% url 'class_timetable' course.id %}"
+                   class="btn btn-outline-info btn-sm">
+
+                    Open
+
+                </a>
+
+            </td>
+
+            <td>
+
+                <a href="{% url 'class_fees' course.id %}"
+                   class="btn btn-outline-dark btn-sm">
+
+                    Open
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+
+            <td colspan="6" class="text-center">
+
+                No Classes Assigned
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
 
 </div>
 

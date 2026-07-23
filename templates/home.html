@@ -27,121 +27,76 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-
 background:#F8F5F2;
-
 }
 
 .hero{
-
 min-height:100vh;
-
 display:flex;
-
 justify-content:center;
-
 align-items:center;
-
 padding:40px;
-
 }
 
 .container-box{
-
 max-width:1100px;
-
 width:100%;
-
 }
 
 h1{
-
 font-size:48px;
-
 font-weight:700;
-
 color:#5A3E2B;
-
 }
 
 .subtitle{
-
 color:#8D6E63;
-
 margin-bottom:45px;
-
 }
 
 .portal-card{
-
 background:white;
-
 border-radius:18px;
-
 padding:30px;
-
 transition:.3s;
-
 cursor:pointer;
-
 height:100%;
-
 box-shadow:0 10px 25px rgba(0,0,0,.06);
-
 }
 
 .portal-card:hover{
-
 transform:translateY(-8px);
-
 }
 
 .portal-icon{
-
 font-size:42px;
-
 color:#6F4E37;
-
 margin-bottom:20px;
-
 }
 
 .portal-card h4{
-
 font-weight:600;
-
 color:#5A3E2B;
-
 }
 
 .portal-card p{
-
 color:#8D6E63;
-
+font-size:15px;
+min-height:48px;
 }
 
 .btn-main{
-
 background:#6F4E37;
-
 color:white;
-
 border:none;
-
 padding:10px 22px;
-
 border-radius:10px;
-
 margin-top:15px;
-
 }
 
 .btn-main:hover{
-
 background:#5A3E2B;
-
 color:white;
-
 }
 
 </style>
@@ -159,121 +114,79 @@ color:white;
 <h1>Tuition Management System</h1>
 
 <p class="subtitle">
-
 Choose your portal to continue
-
 </p>
 
 </div>
 
-<div class="row g-4">
+<div class="row g-4 justify-content-center">
 
-<div class="col-lg-3 col-md-6">
+<!-- Teacher -->
+
+<div class="col-lg-4 col-md-6">
 
 <div class="portal-card text-center">
 
 <div class="portal-icon">
-
 <i class="bi bi-person-workspace"></i>
-
 </div>
 
 <h4>Teacher</h4>
 
 <p>
-
 Manage courses, attendance and students.
-
 </p>
 
 <a href="/login/" class="btn btn-main">
-
 Login
-
 </a>
 
 </div>
 
 </div>
 
-<div class="col-lg-3 col-md-6">
+<!-- Student -->
+
+<div class="col-lg-4 col-md-6">
 
 <div class="portal-card text-center">
 
 <div class="portal-icon">
-
 <i class="bi bi-mortarboard"></i>
-
 </div>
 
 <h4>Student</h4>
 
 <p>
-
 View attendance, courses and fee details.
-
 </p>
 
 <a href="/login/" class="btn btn-main">
-
 Login
-
 </a>
 
 </div>
 
 </div>
 
-<div class="col-lg-3 col-md-6">
+<!-- Admin -->
+
+<div class="col-lg-4 col-md-6">
 
 <div class="portal-card text-center">
 
 <div class="portal-icon">
-
 <i class="bi bi-people"></i>
-
-</div>
-
-<h4>Parent</h4>
-
-<p>
-
-Track your child's progress and fees.
-
-</p>
-
-<a href="/login/" class="btn btn-main">
-
-Login
-
-</a>
-
-</div>
-
-</div>
-
-<div class="col-lg-3 col-md-6">
-
-<div class="portal-card text-center">
-
-<div class="portal-icon">
-
-<i class="bi bi-shield-lock"></i>
-
 </div>
 
 <h4>Admin</h4>
 
 <p>
-
 Complete management of the tuition system.
-
 </p>
 
 <a href="/login/" class="btn btn-main">
-
 Login
-
 </a>
 
 </div>

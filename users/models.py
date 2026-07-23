@@ -8,7 +8,6 @@ class Profile(models.Model):
         ("Admin", "Admin"),
         ("Teacher", "Teacher"),
         ("Student", "Student"),
-        ("Parent", "Parent"),
     )
 
     user = models.OneToOneField(
@@ -27,15 +26,6 @@ class Profile(models.Model):
         blank=True,
         null=True
     )
-
-    parent = models.OneToOneField(
-    "self",
-    on_delete=models.SET_NULL,
-    null=True,
-    blank=True,
-    limit_choices_to={"role": "Parent"},
-    related_name="student"
-)
 
     def save(self, *args, **kwargs):
 

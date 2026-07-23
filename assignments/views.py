@@ -106,3 +106,21 @@ def delete_assignment(request, id):
     assignment.delete()
 
     return redirect("assignment_list")
+
+@login_required
+def class_assignments(request, course_id):
+
+    course = get_object_or_404(Course, id=course_id)
+
+    assignments = Assignment.objects.filter(
+        course=course
+    )
+
+    return render(
+        request,
+        "assignments/assignment_list.html",
+        {
+            "assignments": assignments,
+            "course": course,
+        }
+    )

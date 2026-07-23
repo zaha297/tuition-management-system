@@ -6,7 +6,13 @@
 
     <div>
 
-        <h2>Attendance</h2>
+        <h2>
+            {% if course %}
+                {{ course.course_name }} Attendance
+            {% else %}
+                Attendance
+            {% endif %}
+        </h2>
 
         <p class="text-secondary">
             Manage student attendance records.
@@ -14,12 +20,16 @@
 
     </div>
 
+    {% if request.user.is_superuser or request.user.profile.role != "Student" %}
     <a href="{% url 'add_attendance' %}" class="btn btn-main">
-        <i class="bi bi-plus-circle"></i> Mark Attendance
+        <i class="bi bi-plus-circle"></i>
+        Mark Attendance
     </a>
+    {% endif %}
 
 </div>
 
+{% if request.user.profile.role != "Student" %}
 <form method="GET" class="mb-3">
 
     <input
@@ -30,6 +40,7 @@
         placeholder="Search student...">
 
 </form>
+{% endif %}
 
 <div class="table-card">
 
@@ -47,7 +58,9 @@
 
                 <th>Status</th>
 
+                {% if request.user.is_superuser or request.user.profile.role != "Student" %}
                 <th width="180">Actions</th>
+                {% endif %}
 
             </tr>
 
@@ -83,6 +96,7 @@
 
                 </td>
 
+                {% if request.user.is_superuser or request.user.profile.role != "Student" %}
                 <td>
 
                     <a href="{% url 'edit_attendance' record.id %}"
@@ -101,6 +115,7 @@
                     </a>
 
                 </td>
+                {% endif %}
 
             </tr>
 
@@ -108,7 +123,7 @@
 
             <tr>
 
-                <td colspan="5" class="text-center">
+                <td colspan="{% if request.user.is_superuser or request.user.profile.role != 'Student' %}5{% else %}4{% endif %}" class="text-center">
 
                     No Attendance Records Found
 

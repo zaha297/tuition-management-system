@@ -73,6 +73,10 @@
 
 <th>Teacher</th>
 
+<th>Email</th>
+
+<th>Phone</th>
+
 <th>Duration</th>
 
 <th>Fee</th>
@@ -101,24 +105,15 @@
 
 </td>
 
-<td>
+<td>{{ course.teacher.name }}</td>
 
-{{ course.teacher_name }}
+<td>{{ course.teacher_email }}</td>
 
-</td>
+<td>{{ course.teacher_phone }}</td>
 
-<td>
+<td>{{ course.duration }}</td>
 
-{{ course.duration }}
-
-</td>
-
-<td>
-
-₹ {{ course.fee }}
-
-</td>
-
+<td>₹ {{ course.fee }}</td>
 {% if request.user.is_superuser %}
 
 <td>

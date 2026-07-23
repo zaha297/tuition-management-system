@@ -27,4 +27,6 @@ urlpatterns = [
         name="delete_timetable"
     ),
 
+    path("class/<int:course_id>/", views.class_timetable, name="class_timetable"),
+
 ]

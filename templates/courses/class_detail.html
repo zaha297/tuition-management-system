@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">{{ course.course_name }}</h2>
+
+<div class="row g-4">
+
+<div class="col-md-4">
+<div class="table-card text-center">
+
+<h4>Students</h4>
+
+<p>{{ students|length }} Students</p>
+
+<a href="#" class="btn btn-main">
+Open
+</a>
+
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="table-card text-center">
+
+<h4>Attendance</h4>
+
+<p>{{ attendance|length }} Records</p>
+
+<a href="{% url 'class_attendance' course.id %}" class="btn btn-main">
+Open
+</a>
+
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="table-card text-center">
+
+<h4>Assignments</h4>
+
+<p>{{ assignments|length }} Assignments</p>
+
+<a href="{% url 'class_assignments' course.id %}" class="btn btn-main">
+    Open
+</a>
+
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="table-card text-center">
+
+<h4>Timetable</h4>
+
+<p>{{ timetable|length }} Classes</p>
+
+<a href="#" class="btn btn-main">
+Open
+</a>
+
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="table-card text-center">
+
+<h4>Fees</h4>
+
+<p>{{ fees|length }} Records</p>
+
+<a href="{% url 'class_students' course.id %}" class="btn btn-main">
+    Open
+</a>
+
+</div>
+</div>
+
+</div>
+
+{% endblock %}

@@ -139,10 +139,7 @@ def dashboard(request):
             role="Teacher"
         ).count(),
 
-        "parent_count": Profile.objects.filter(
-            role="Parent"
-        ).count(),
-
+        
         "recent_students": Profile.objects.filter(
             role="Student"
         ).select_related("user").order_by("-id")[:5],
@@ -193,6 +190,12 @@ def dashboard(request):
     # -------------------------------
 
     if profile.role == "Teacher":
+
+        courses = Course.objects.filter(
+            teacher=request.user
+        )
+
+        context["courses"] = courses
 
         return render(
             request,
@@ -249,52 +252,7 @@ def dashboard(request):
         )
 
 
-        # -------------------------------
-    # PARENT
-    # -------------------------------
 
-    elif profile.role == "Parent":
-
-        student_profile = profile.student
-
-        if student_profile:
-
-            student = student_profile.user
-
-            context["student_profile"] = student_profile
-
-            context["attendance_count"] = Attendance.objects.filter(
-                student=student
-            ).count()
-
-            context["fee_count"] = Fee.objects.filter(
-                student=student
-            ).count()
-
-            enrollments = Enrollment.objects.filter(
-                student=student
-            ).select_related("course")
-
-            my_courses = []
-
-            for enrollment in enrollments:
-                my_courses.append(enrollment.course)
-
-            context["my_courses"] = my_courses
-
-            context["my_attendance"] = Attendance.objects.filter(
-                student=student
-            ).order_by("-date")
-
-            context["my_fees"] = Fee.objects.filter(
-                student=student
-            ).order_by("-payment_date")
-
-        return render(
-            request,
-            "users/parent_dashboard.html",
-            context
-        )
     # -------------------------------
     # ADMIN ROLE
     # -------------------------------
